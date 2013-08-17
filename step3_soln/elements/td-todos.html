@@ -1,17 +1,23 @@
+<link rel="import" href="td-input.html">
 <link rel="import" href="td-item.html">
-<link rel="import" href="td-model.html">
 
+<<<<<<< HEAD
 <polymer-element name="td-todos">
   <template>
 	<link rel="stylesheet" href="td-todos.css">
     <td-model id="model" items="{{items}}"></td-model>
+=======
+<polymer-element name="td-todos" attributes="modelId">
+  <template>
+    <link rel="stylesheet" href="td-todos.css">
+>>>>>>> a3aaf68de4b6a66d8ecc4d4fd2f90435ab56668a
     <section id="todoapp">
       <header id="header">
-        <input id="new-todo" placeholder="What needs to be done?" autofocus on-keyup="keyAction">
+        <input is="td-input" id="new-todo" placeholder="What needs to be done?" autofocus on-td-input-commit="addTodoAction" on-td-input-cancel="cancelAddTodoAction">
       </header>
-      <section id="main">
+      <section id="main">   
         <ul id="todo-list">
-          <template repeat="{{items}}">
+          <template repeat="{{model.items}}">
             <li is="td-item" item="{{}}"></li>
           </template>
         </ul>
@@ -22,6 +28,7 @@
     var ENTER_KEY = 13;
     var ESC_KEY = 27;
     Polymer('td-todos', {
+<<<<<<< HEAD
       keyAction: function(e, detail, sender) {
         switch (e.keyCode) {
           case ENTER_KEY:
@@ -32,6 +39,19 @@
             sender.value = '';
             break;
         }
+=======
+      modelIdChanged: function() {
+        this.model = document.querySelector('#' + this.modelId);
+      },
+      addTodoAction: function() {
+        this.model.newItem(this.$['new-todo'].value);
+        // when polyfilling Object.observe, make sure we update immediately
+        Platform.flush();
+        this.$['new-todo'].value = '';
+      },
+      cancelAddTodoAction: function() {
+        this.$['new-todo'].value = '';
+>>>>>>> a3aaf68de4b6a66d8ecc4d4fd2f90435ab56668a
       }
     });
   </script>
